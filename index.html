@@ -42,19 +42,39 @@
 
   .intro-border {
     border: 2px solid var(--gold);
+    border-image: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold)) 1;
     padding: 40px 50px;
     text-align: center;
     position: relative;
+    box-shadow: inset 0 0 20px rgba(201,168,76,0.1), 0 0 30px rgba(201,168,76,0.2);
+    background: linear-gradient(135deg, rgba(201,168,76,0.02) 0%, rgba(0,0,0,0.1) 100%);
   }
 
-  .intro-border::before, .intro-border::after {
-    content: '❖';
-    color: var(--gold);
+  .intro-border::before {
+    content: '✦ ✿ ✦';
     position: absolute;
-    font-size: 20px;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold-light);
+    font-size: 14px;
+    letter-spacing: 8px;
+    background: #0d0000;
+    padding: 0 12px;
   }
-  .intro-border::before { top: -14px; left: 50%; transform: translateX(-50%); background: #0d0000; padding: 0 8px; }
-  .intro-border::after { bottom: -14px; left: 50%; transform: translateX(-50%); background: #0d0000; padding: 0 8px; }
+
+  .intro-border::after {
+    content: '✦ ✿ ✦';
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold-light);
+    font-size: 14px;
+    letter-spacing: 8px;
+    background: #0d0000;
+    padding: 0 12px;
+  }
 
   .ganesh-img {
     width: 140px; height: auto;
@@ -74,6 +94,26 @@
     letter-spacing: 0.04em;
     margin-top: 12px;
     line-height: 1.6;
+  }
+
+  /* Side decorations */
+  #intro-screen::before, #intro-screen::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  #intro-screen::before {
+    left: 20px;
+  }
+
+  #intro-screen::after {
+    right: 20px;
   }
 
   /* ── MAIN CARD ── */
@@ -379,7 +419,7 @@
     width: 100%;
     height: 260px;
     object-fit: cover;
-    object-position: center;
+    object-position: bottom;
     display: block;
   }
 
@@ -481,6 +521,9 @@
       <div class="bells-row">
         <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
         <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
+        <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
+        <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
+        <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
       </div>
 
       <!-- Mandala -->
@@ -510,7 +553,7 @@
           श्रीमती <strong>भगवती खनाल</strong>की सुपुत्री
         </p>
         <div class="bride-groom-name">
-          <span class="name-dev">रश्मि खनाल</span>
+          <span class="name-dev">उप सेनानी रश्मि खनाल</span>
           <span class="name-roman">Rashmi Khanal</span>
         </div>
       </div>
@@ -552,7 +595,7 @@
       <!-- Event Info -->
       <div class="event-box">
         <p class="event-label">विवाह समारोह</p>
-        <p class="event-date">२०८३ साल बैशाख ८ गते, सोमबार</p>
+        <p class="event-date">२०८३ साल बैशाख ८ गते, मंगलबार</p>
         <p class="event-note">
           तपाईंको गरिमामय उपस्थितिको लागि<br>हार्दिक निमन्त्रणा गर्दछौं।
         </p>
@@ -584,6 +627,25 @@
     }, 1200);
   }, 2800);
 
+  // Play audio after 1.5 seconds
+  setTimeout(() => {
+    const music = document.getElementById('bg-music');
+    music.volume = 0.35;
+    music.play().catch((err) => console.log('Autoplay blocked:', err));
+  }, 1500);
+
+  // Unmute on first user interaction
+  function unmute() {
+    const music = document.getElementById('bg-music');
+    music.muted = false;
+    document.removeEventListener('click', unmute);
+    document.removeEventListener('touchstart', unmute);
+  }
+  
+  document.addEventListener('click', unmute, { once: true });
+  document.addEventListener('touchstart', unmute, { once: true });
+  
+
   // Floating flower petals
   function spawnPetals() {
     const container = document.getElementById('petals-container');
@@ -603,6 +665,8 @@
     }
   }
 </script>
-
+<audio id="bg-music" loop preload="auto" muted>
+  <source src="audio/wedding.mp3" type="audio/mpeg">
+</audio>
 </body>
 </html>
