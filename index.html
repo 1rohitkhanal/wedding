@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>शुभ विवाह - रश्मि & अविन</title>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Playfair+Display:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Noto+Serif+Devanagari:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,660 +13,524 @@
     --deep-red: #5C0000;
     --gold: #C9A84C;
     --gold-light: #E8C97A;
-    --gold-pale: #F5E6B8;
-    --cream: #FDF6E3;
-    --off-white: #FAF3E0;
+    --gold-pale: #FBF0CC;
+    --cream: #FDF8ED;
     --dark-red: #3D0000;
-    --maroon: #800020;
+    --ink: #2C1A00;
   }
 
   body, html {
-    margin: 0; padding: 0;
-    background: var(--dark-red);
+    background: var(--deep-red);
     font-family: 'Noto Serif Devanagari', serif;
     min-height: 100vh;
-    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
   }
 
-  /* ── INTRO SCREEN ── */
-  #intro-screen {
-    position: fixed; inset: 0; z-index: 100;
-    background: radial-gradient(ellipse at center, #2a0000 0%, #0d0000 100%);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 24px;
-    transition: opacity 1.2s ease;
-  }
-
-  #intro-screen.fade-out { opacity: 0; pointer-events: none; }
-
-  .intro-border {
-    border: 2px solid var(--gold);
-    border-image: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold)) 1;
-    padding: 40px 50px;
-    text-align: center;
+  /* ── CARD ── */
+  .card {
+    max-width: 500px;
+    width: 100%;
+    background: var(--cream);
     position: relative;
-    box-shadow: inset 0 0 20px rgba(201,168,76,0.1), 0 0 30px rgba(201,168,76,0.2);
-    background: linear-gradient(135deg, rgba(201,168,76,0.02) 0%, rgba(0,0,0,0.1) 100%);
+    box-shadow: 0 0 0 2px var(--gold), 0 0 0 6px var(--deep-red), 0 0 0 8px var(--gold), 0 8px 50px rgba(0,0,0,0.6);
+    animation: rise 1.2s ease forwards;
+    opacity: 0;
+    transform: translateY(24px);
   }
 
-  .intro-border::before {
-    content: '✦ ✿ ✦';
-    position: absolute;
-    top: -24px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--gold-light);
-    font-size: 14px;
-    letter-spacing: 8px;
-    background: #0d0000;
-    padding: 0 12px;
-  }
-
-  .intro-border::after {
-    content: '✦ ✿ ✦';
-    position: absolute;
-    bottom: -24px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--gold-light);
-    font-size: 14px;
-    letter-spacing: 8px;
-    background: #0d0000;
-    padding: 0 12px;
-  }
-
-  .ganesh-img {
-    width: 140px; height: auto;
-    filter: drop-shadow(0 0 18px rgba(201,168,76,0.6));
-    animation: pulseGlow 2.5s ease-in-out infinite;
-  }
-
-  @keyframes pulseGlow {
-    0%, 100% { filter: drop-shadow(0 0 12px rgba(201,168,76,0.5)); }
-    50% { filter: drop-shadow(0 0 28px rgba(201,168,76,0.9)); }
-  }
-
-  .intro-mantra {
-    color: var(--gold-light);
-    font-size: clamp(1.1rem, 4vw, 1.5rem);
-    font-family: 'Tiro Devanagari Hindi', serif;
-    letter-spacing: 0.04em;
-    margin-top: 12px;
-    line-height: 1.6;
-  }
-
-  /* Side decorations */
-  #intro-screen::before, #intro-screen::after {
-    content: '';
-    position: fixed;
-    top: 50%;
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    transform: translateY(-50%);
-    pointer-events: none;
-  }
-
-  #intro-screen::before {
-    left: 20px;
-  }
-
-  #intro-screen::after {
-    right: 20px;
-  }
-
-  /* ── MAIN CARD ── */
-  #main-content {
-    display: none; opacity: 0;
-    background: linear-gradient(170deg, #1a0000 0%, #3a0000 40%, #1a0000 100%);
-    min-height: 100vh;
-    padding: 16px;
-  }
-
-  #main-content.visible {
-    display: block;
-    animation: cardReveal 1.5s ease forwards;
-  }
-
-  @keyframes cardReveal {
-    from { opacity: 0; transform: translateY(20px); }
+  @keyframes rise {
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .invitation-card {
-    max-width: 480px;
-    margin: 0 auto;
-    background: var(--cream);
-    border: none;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 60px rgba(201,168,76,0.3), 0 0 0 1px var(--gold);
-  }
-
-  /* Gold border frame */
-  .card-frame {
-    position: absolute; inset: 8px;
-    border: 1.5px solid var(--gold);
-    pointer-events: none; z-index: 10;
-  }
-  .card-frame::before {
+  /* Inner border lines */
+  .card::before {
     content: '';
-    position: absolute; inset: 4px;
-    border: 0.5px solid rgba(201,168,76,0.4);
-  }
-
-  /* Corner ornaments */
-  .corner {
     position: absolute;
-    width: 48px; height: 48px;
-    z-index: 11;
+    inset: 12px;
+    border: 1px solid rgba(201,168,76,0.5);
+    pointer-events: none;
+    z-index: 5;
   }
-  .corner svg { width: 100%; height: 100%; }
-  .corner.tl { top: 6px; left: 6px; }
-  .corner.tr { top: 6px; right: 6px; transform: scaleX(-1); }
-  .corner.bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
-  .corner.br { bottom: 6px; right: 6px; transform: scale(-1,-1); }
 
   /* ── TOP PANEL ── */
   .top-panel {
-    background: linear-gradient(180deg, var(--crimson) 0%, var(--deep-red) 100%);
-    padding: 28px 20px 24px;
+    background: linear-gradient(175deg, #6B0000 0%, #3D0000 100%);
+    padding: 32px 24px 28px;
     text-align: center;
     position: relative;
   }
 
-  .bells-row {
-    display: flex; justify-content: space-between;
-    padding: 0 10px;
-    margin-bottom: 16px;
+  /* Corner flowers */
+  .top-panel::before, .top-panel::after {
+    font-size: 22px;
+    color: var(--gold);
+    opacity: 0.7;
+    position: absolute;
+    top: 14px;
   }
+  .top-panel::before { content: '✿'; left: 18px; }
+  .top-panel::after  { content: '✿'; right: 18px; }
 
-  .bell-wrap {
-    width: 44px; height: 52px;
-    display: flex; align-items: flex-start; justify-content: center;
+  .om-line {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    color: var(--gold-light);
+    font-size: 3rem;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(201,168,76,0.6);
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
   }
-
-  .bell-wrap img {
-    width: 36px; height: auto;
-    transform-origin: top center;
-    animation: swing 2.2s ease-in-out infinite;
-    mix-blend-mode: screen;
-    filter: brightness(1.4) sepia(0.2);
-  }
-
-  .bell-wrap:last-child img { animation-delay: -1.1s; }
-
-  @keyframes swing {
-    0%, 100% { transform: rotate(12deg); }
-    50% { transform: rotate(-12deg); }
-  }
-
-  .mandala-wrap {
-    width: 100px; height: 100px;
-    margin: 0 auto 12px;
-    position: relative;
-  }
-
-  .mandala-wrap img {
-    width: 100%; height: 100%;
-    animation: spin 18s linear infinite;
-    opacity: 0.85;
-    mix-blend-mode: screen;
-    filter: sepia(1) saturate(2) hue-rotate(340deg) brightness(1.2);
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
 
   .shubha-vivah {
     font-family: 'Tiro Devanagari Hindi', serif;
-    font-size: clamp(1.8rem, 7vw, 2.6rem);
+    font-size: clamp(2rem, 8vw, 2.8rem);
     color: var(--gold-light);
-    text-shadow: 0 0 20px rgba(201,168,76,0.5);
-    letter-spacing: 0.06em;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    letter-spacing: 0.08em;
     line-height: 1.2;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
 
-  .mantra-text {
+  .shloka {
     font-family: 'Tiro Devanagari Hindi', serif;
-    font-size: clamp(0.68rem, 2.5vw, 0.82rem);
-    color: rgba(245,230,184,0.85);
-    line-height: 1.8;
+    font-size: clamp(0.82rem, 2.8vw, 0.95rem);
+    color: rgba(232,201,122,0.8);
     font-style: italic;
-    max-width: 300px;
+    line-height: 1.9;
+    max-width: 340px;
     margin: 0 auto;
-    padding: 0 10px;
   }
 
-  /* ── GOLD RIBBON ── */
-  .ribbon {
-    height: 10px;
-    background: linear-gradient(90deg, var(--deep-red), var(--gold), #f0d080, var(--gold), var(--deep-red));
-    position: relative;
-  }
-
-  /* ── BODY CONTENT ── */
+  /* ── BODY ── */
   .card-body {
-    padding: 24px 28px 20px;
+    padding: 30px 32px 26px;
     background: var(--cream);
     text-align: center;
   }
 
-  .family-block { margin-bottom: 12px; }
+  /* Family block */
+  .family-block {
+    margin-bottom: 6px;
+  }
 
   .parent-line {
-    font-size: clamp(0.75rem, 2.8vw, 0.88rem);
-    color: #5a3a1a;
-    line-height: 1.7;
-    font-family: 'Noto Serif Devanagari', serif;
+    font-size: clamp(0.9rem, 3.2vw, 1.05rem);
+    color: #5a3010;
+    line-height: 1.8;
+    font-weight: 400;
+  }
+  .parent-line strong {
+    color: var(--dark-red);
+    font-weight: 700;
   }
 
-  .parent-line strong { color: var(--dark-red); }
-
-  .bride-groom-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.35rem, 5vw, 1.75rem);
+  .person-name {
+    margin: 8px 0 4px;
+  }
+  .name-dev {
+    display: block;
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: clamp(1.4rem, 5.5vw, 1.8rem);
     font-weight: 700;
     color: var(--crimson);
-    margin: 4px 0 2px;
-    letter-spacing: 0.02em;
-    line-height: 1.2;
+    line-height: 1.25;
   }
-
-  .name-dev {
-    font-family: 'Noto Serif Devanagari', serif;
-    font-size: clamp(1.1rem, 4vw, 1.4rem);
-    font-weight: 600;
-    color: var(--dark-red);
-    display: block;
-    margin-bottom: 2px;
-  }
-
   .name-roman {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(0.95rem, 3.5vw, 1.15rem);
-    color: var(--gold);
-    font-style: italic;
     display: block;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 3.8vw, 1.25rem);
+    color: #8B6914;
+    margin-top: 2px;
   }
 
   /* Weds divider */
-  .weds-divider {
+  .weds-wrap {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 14px 0;
+    gap: 14px;
+    margin: 20px 0;
   }
-
   .weds-line {
     flex: 1;
-    height: 0.5px;
+    height: 1px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
-
-  .weds-text {
+  .weds-badge {
     font-family: 'Noto Serif Devanagari', serif;
-    font-size: clamp(0.78rem, 2.8vw, 0.9rem);
+    font-size: clamp(0.88rem, 3vw, 1rem);
     color: var(--crimson);
-    white-space: nowrap;
-    padding: 4px 10px;
-    border: 0.5px solid var(--gold);
+    border: 1px solid var(--gold);
     background: var(--gold-pale);
-  }
-
-  /* Gold separator */
-  .gold-sep {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), #e8c97a, var(--gold), transparent);
-    margin: 18px 0;
+    padding: 6px 14px;
+    white-space: nowrap;
   }
 
   /* ── EVENT BOX ── */
   .event-box {
-    background: linear-gradient(135deg, var(--crimson), var(--deep-red));
-    border: 1px solid var(--gold);
-    padding: 16px 20px;
-    margin: 18px 0 16px;
+    background: linear-gradient(160deg, var(--crimson), #4A0000);
+    border: 1.5px solid var(--gold);
+    padding: 22px 24px 20px;
+    margin-top: 24px;
     position: relative;
   }
-
   .event-box::before {
     content: '✦';
-    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-    background: var(--crimson); padding: 0 8px;
-    color: var(--gold-light); font-size: 14px;
+    position: absolute; top: -13px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--crimson);
+    color: var(--gold-light);
+    font-size: 16px;
+    padding: 0 10px;
   }
 
   .event-label {
-    font-size: 0.72rem;
-    color: rgba(245,230,184,0.7);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
     font-family: 'Playfair Display', serif;
-    margin-bottom: 6px;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(232,201,122,0.7);
+    margin-bottom: 10px;
   }
 
   .event-date {
     font-family: 'Noto Serif Devanagari', serif;
-    font-size: clamp(0.95rem, 3.5vw, 1.15rem);
-    font-weight: 600;
+    font-size: clamp(1.15rem, 4.5vw, 1.4rem);
+    font-weight: 700;
     color: var(--gold-light);
-    margin-bottom: 4px;
+    line-height: 1.5;
+    margin-bottom: 10px;
   }
 
   .event-note {
     font-family: 'Noto Serif Devanagari', serif;
-    font-size: clamp(0.75rem, 2.5vw, 0.88rem);
-    color: rgba(245,230,184,0.85);
-    line-height: 1.7;
-    margin-top: 8px;
+    font-size: clamp(0.9rem, 3.2vw, 1.05rem);
+    color: rgba(245,230,184,0.9);
+    line-height: 1.85;
+    border-top: 1px solid rgba(201,168,76,0.3);
+    padding-top: 12px;
+    margin-top: 4px;
   }
 
-  /* ── FOOTER DECOR ── */
+  /* ── FOOTER ── */
   .footer-panel {
-    background: linear-gradient(0deg, var(--deep-red) 0%, var(--crimson) 100%);
-    padding: 16px 20px 22px;
+    background: linear-gradient(0deg, #2A0000 0%, var(--deep-red) 100%);
+    padding: 16px 20px 20px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer-symbol {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    color: var(--gold-light);
+    text-shadow: 0 0 12px rgba(201,168,76,0.5);
+  }
+  .footer-symbol.large { font-size: 2.6rem; }
+  .footer-symbol.small { font-size: 1.6rem; opacity: 0.7; }
+
+  .footer-sep {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  /* ── BELLS ── */
+  .bells-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .bell-svg {
+    width: 32px; height: 40px;
+    transform-origin: top center;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  }
+  .bell-svg.swing-a { animation: bellSwing 2.4s ease-in-out infinite; }
+  .bell-svg.swing-b { animation: bellSwing 2.4s ease-in-out infinite; animation-delay: -1.2s; }
+  .bell-svg.swing-c { animation: bellSwing 2.6s ease-in-out infinite; animation-delay: -0.6s; }
+
+  @keyframes bellSwing {
+    0%, 100% { transform: rotate(14deg); }
+    50%       { transform: rotate(-14deg); }
+  }
+
+  /* Bell string */
+  .bell-wrap {
+    display: flex;
+    flex-direction: column;
     align-items: center;
   }
-
-  .footer-panel img {
-    width: 54px; height: 54px;
-    object-fit: contain;
-    border-radius: 50%;
-    border: 1.5px solid var(--gold);
-    padding: 4px;
-    background: rgba(0,0,0,0.3);
-    mix-blend-mode: normal;
-    filter: brightness(1.1) saturate(1.2);
+  .bell-string {
+    width: 1.5px;
+    height: 14px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.9), rgba(201,168,76,0.4));
+    margin-bottom: 0;
   }
 
-  .footer-om {
-    font-family: 'Tiro Devanagari Hindi', serif;
-    color: var(--gold-light);
-    font-size: 2rem;
-    text-shadow: 0 0 10px rgba(201,168,76,0.5);
-  }
-
-  /* Floating petals */
-  .petal {
-    position: fixed;
-    font-size: 14px;
-    opacity: 0;
-    pointer-events: none;
-    animation: fall linear infinite;
-    z-index: 5;
-  }
-
-  @keyframes fall {
-    0% { transform: translateY(-20px) rotate(0deg); opacity: 0.7; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
-
-  /* ── MANDAP ── */
-  .mandap-wrap {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-top: 2px solid var(--gold);
-    border-bottom: 2px solid var(--gold);
-    max-height: 260px;
-  }
-
-  .mandap-img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    object-position: bottom;
-    display: block;
-  }
-
-  .mandap-overlay {
+  /* ── CORNER ORNAMENTS ── */
+  .corner-orn {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(92,0,0,0.25) 0%,
-      rgba(0,0,0,0.05) 40%,
-      rgba(0,0,0,0.05) 60%,
-      rgba(92,0,0,0.35) 100%
-    );
+    width: 52px; height: 52px;
+    z-index: 6;
+    pointer-events: none;
+  }
+  .corner-orn.tl { top: 0;    left: 0; }
+  .corner-orn.tr { top: 0;    right: 0; transform: scaleX(-1); }
+  .corner-orn.bl { bottom: 0; left: 0;  transform: scaleY(-1); }
+  .corner-orn.br { bottom: 0; right: 0; transform: scale(-1,-1); }
+
+  /* ── GOLD BAND enhanced ── */
+  .gold-band {
+    height: 14px;
+    background: linear-gradient(90deg, var(--deep-red) 0%, var(--gold) 15%, #F5DC6A 50%, var(--gold) 85%, var(--deep-red) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .gold-band::before {
+    content: '◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5px;
+    color: rgba(92,0,0,0.55);
+    letter-spacing: 6px;
+    white-space: nowrap;
+  }
+
+  /* ── GARLAND DIVIDER ── */
+  .garland {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    padding-bottom: 10px;
+    gap: 4px;
+    margin: 4px 0 22px;
+  }
+  .garland-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  .garland-dot.large {
+    width: 9px; height: 9px;
+    opacity: 0.8;
+  }
+  .garland-flower {
+    color: var(--gold);
+    font-size: 15px;
+    line-height: 1;
+  }
+  .garland-flower.center {
+    font-size: 20px;
+    color: var(--crimson);
+    text-shadow: 0 0 8px rgba(139,0,0,0.3);
   }
 
-  .mandap-label {
-    font-family: 'Tiro Devanagari Hindi', serif;
-    font-size: 0.85rem;
-    color: var(--gold-light);
-    letter-spacing: 0.18em;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.8);
-    opacity: 0.9;
+  /* ── INNER CREAM BORDER ── */
+  .card-body-inner {
+    border: 1px solid rgba(201,168,76,0.25);
+    margin: 0 14px 14px;
+    padding: 22px 20px 20px;
   }
 
-  @media (max-width: 380px) {
-    .card-body { padding: 20px 16px 16px; }
-    .top-panel { padding: 22px 14px 18px; }
+  @media (max-width: 400px) {
+    .card-body { padding: 16px 14px 14px; }
+    .top-panel { padding: 26px 18px 22px; }
+    .card-body-inner { margin: 0 8px 10px; padding: 18px 14px 16px; }
   }
 </style>
 </head>
 <body>
 
-<!-- Intro Screen -->
-<div id="intro-screen">
-  <div class="intro-border">
-    <img src="images/ganesh.webp" alt="श्री गणेश" class="ganesh-img">
-    <p class="intro-mantra">ॐ श्री गणेशाय नमः</p>
-    <p class="intro-mantra" style="font-size: clamp(0.75rem, 2.5vw, 0.9rem); margin-top:6px; color: rgba(232,201,122,0.75);">
-      वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ
+<div class="card">
+
+  <!-- Corner ornaments -->
+  <div class="corner-orn tl">
+    <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2 L22 2 L22 6 L6 6 L6 22 L2 22 Z" fill="#C9A84C" opacity="0.85"/>
+      <path d="M2 2 L48 2" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+      <path d="M2 2 L2 48" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+      <circle cx="14" cy="14" r="3" fill="#C9A84C" opacity="0.6"/>
+      <path d="M14 8 Q18 14 14 20 Q10 14 14 8Z" fill="#C9A84C" opacity="0.35"/>
+      <path d="M8 14 Q14 18 20 14 Q14 10 8 14Z" fill="#C9A84C" opacity="0.35"/>
+    </svg>
+  </div>
+  <div class="corner-orn tr">
+    <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2 L22 2 L22 6 L6 6 L6 22 L2 22 Z" fill="#C9A84C" opacity="0.85"/>
+      <path d="M2 2 L48 2" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+      <path d="M2 2 L2 48" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+      <circle cx="14" cy="14" r="3" fill="#C9A84C" opacity="0.6"/>
+      <path d="M14 8 Q18 14 14 20 Q10 14 14 8Z" fill="#C9A84C" opacity="0.35"/>
+      <path d="M8 14 Q14 18 20 14 Q14 10 8 14Z" fill="#C9A84C" opacity="0.35"/>
+    </svg>
+  </div>
+  <div class="corner-orn bl">
+    <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2 L22 2 L22 6 L6 6 L6 22 L2 22 Z" fill="#C9A84C" opacity="0.85"/>
+      <path d="M2 2 L48 2" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+      <path d="M2 2 L2 48" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+      <circle cx="14" cy="14" r="3" fill="#C9A84C" opacity="0.6"/>
+      <path d="M14 8 Q18 14 14 20 Q10 14 14 8Z" fill="#C9A84C" opacity="0.35"/>
+      <path d="M8 14 Q14 18 20 14 Q14 10 8 14Z" fill="#C9A84C" opacity="0.35"/>
+    </svg>
+  </div>
+  <div class="corner-orn br">
+    <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2 L22 2 L22 6 L6 6 L6 22 L2 22 Z" fill="#C9A84C" opacity="0.85"/>
+      <path d="M2 2 L48 2" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+      <path d="M2 2 L2 48" stroke="#C9A84C" stroke-width="1" opacity="0.4"/>
+      <circle cx="14" cy="14" r="3" fill="#C9A84C" opacity="0.6"/>
+      <path d="M14 8 Q18 14 14 20 Q10 14 14 8Z" fill="#C9A84C" opacity="0.35"/>
+      <path d="M8 14 Q14 18 20 14 Q14 10 8 14Z" fill="#C9A84C" opacity="0.35"/>
+    </svg>
+  </div>
+
+  <!-- Top red panel -->
+  <div class="top-panel">
+
+    <!-- Bells -->
+    <div class="bells-row">
+      <div class="bell-wrap">
+        <div class="bell-string"></div>
+        <svg class="bell-svg swing-b" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 3 C16 3 6 10 6 22 L26 22 C26 10 16 3 16 3Z" fill="#E8C97A" stroke="#C9A84C" stroke-width="1"/>
+          <rect x="6" y="22" width="20" height="4" rx="1" fill="#C9A84C"/>
+          <circle cx="16" cy="30" r="3" fill="#C9A84C"/>
+          <path d="M13 30 L19 30" stroke="#A07820" stroke-width="1"/>
+          <ellipse cx="11" cy="14" rx="2" ry="3" fill="rgba(255,255,255,0.2)"/>
+        </svg>
+      </div>
+      <div class="bell-wrap">
+        <div class="bell-string"></div>
+        <svg class="bell-svg swing-a" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 3 C16 3 5 11 5 23 L27 23 C27 11 16 3 16 3Z" fill="#F0D070" stroke="#C9A84C" stroke-width="1"/>
+          <rect x="5" y="23" width="22" height="4.5" rx="1.2" fill="#C9A84C"/>
+          <circle cx="16" cy="32" r="3.5" fill="#B8901A"/>
+          <path d="M12.5 32 L19.5 32" stroke="#8B6810" stroke-width="1.2"/>
+          <ellipse cx="10" cy="15" rx="2" ry="3.5" fill="rgba(255,255,255,0.2)"/>
+        </svg>
+      </div>
+      <div class="bell-wrap">
+        <div class="bell-string"></div>
+        <svg class="bell-svg swing-c" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 3 C16 3 6 10 6 22 L26 22 C26 10 16 3 16 3Z" fill="#E8C97A" stroke="#C9A84C" stroke-width="1"/>
+          <rect x="6" y="22" width="20" height="4" rx="1" fill="#C9A84C"/>
+          <circle cx="16" cy="30" r="3" fill="#C9A84C"/>
+          <path d="M13 30 L19 30" stroke="#A07820" stroke-width="1"/>
+          <ellipse cx="11" cy="14" rx="2" ry="3" fill="rgba(255,255,255,0.2)"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="om-line">ॐ</div>
+    <h1 class="shubha-vivah">शुभ विवाह</h1>
+    <p class="shloka">
+      निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
     </p>
   </div>
-</div>
 
-<!-- Floating petals container -->
-<div id="petals-container"></div>
+  <!-- Gold band -->
+  <div class="gold-band"></div>
 
-<!-- Main Invitation -->
-<main id="main-content">
-  <div class="invitation-card">
+  <!-- Main body -->
+  <div class="card-body">
+  <div class="card-body-inner">
 
-    <!-- Frame overlay -->
-    <div class="card-frame"></div>
-
-    <!-- Corner ornaments -->
-    <div class="corner tl">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 4 L20 4 L20 8 L8 8 L8 20 L4 20 Z" fill="#C9A84C" opacity="0.9"/>
-        <path d="M4 4 L44 4" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
-        <path d="M4 4 L4 44" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
-        <circle cx="24" cy="24" r="4" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <circle cx="12" cy="12" r="2" fill="#C9A84C" opacity="0.7"/>
-      </svg>
-    </div>
-    <div class="corner tr">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 4 L20 4 L20 8 L8 8 L8 20 L4 20 Z" fill="#C9A84C" opacity="0.9"/>
-        <path d="M4 4 L44 4" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
-        <path d="M4 4 L4 44" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
-        <circle cx="24" cy="24" r="4" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <circle cx="12" cy="12" r="2" fill="#C9A84C" opacity="0.7"/>
-      </svg>
-    </div>
-    <div class="corner bl">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 4 L20 4 L20 8 L8 8 L8 20 L4 20 Z" fill="#C9A84C" opacity="0.9"/>
-        <path d="M4 4 L44 4" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
-        <path d="M4 4 L4 44" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
-        <circle cx="24" cy="24" r="4" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <circle cx="12" cy="12" r="2" fill="#C9A84C" opacity="0.7"/>
-      </svg>
-    </div>
-    <div class="corner br">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 4 L20 4 L20 8 L8 8 L8 20 L4 20 Z" fill="#C9A84C" opacity="0.9"/>
-        <path d="M4 4 L44 4" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
-        <path d="M4 4 L4 44" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
-        <circle cx="24" cy="24" r="4" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <circle cx="12" cy="12" r="2" fill="#C9A84C" opacity="0.7"/>
-      </svg>
+    <!-- Garland ornament -->
+    <div class="garland">
+      <div class="garland-dot"></div>
+      <div class="garland-dot large"></div>
+      <span class="garland-flower">✿</span>
+      <div class="garland-dot large"></div>
+      <span class="garland-flower center">❀</span>
+      <div class="garland-dot large"></div>
+      <span class="garland-flower">✿</span>
+      <div class="garland-dot large"></div>
+      <div class="garland-dot"></div>
     </div>
 
-    <!-- Top crimson panel -->
-    <div class="top-panel">
-      <!-- Bells -->
-      <div class="bells-row">
-        <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
-        <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
-        <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
-        <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
-        <div class="bell-wrap"><img src="images/bell.jpg" alt="घण्टा"></div>
+    <!-- Bride -->
+    <div class="family-block">
+      <p class="parent-line">
+        <strong>श्री गणेश खनाल</strong> तथा<br>
+        श्रीमती <strong>भगवती खनाल</strong>की सुपुत्री
+      </p>
+      <div class="person-name">
+        <span class="name-dev">रश्मि खनाल</span>
+        <span class="name-roman">Rashmi Khanal</span>
       </div>
+    </div>
 
-      <!-- Mandala -->
-      <div class="mandala-wrap">
-        <img src="images/mandala.webp" alt="मण्डला">
+    <!-- Weds -->
+    <div class="weds-wrap">
+      <div class="weds-line"></div>
+      <div class="weds-badge">वैवाहिक बन्धनमा</div>
+      <div class="weds-line"></div>
+    </div>
+
+    <!-- Groom -->
+    <div class="family-block">
+      <p class="parent-line">
+        <strong>श्री रवि खड्का</strong> तथा<br>
+        श्रीमती <strong>आशा खड्का</strong>का सुपुत्र
+      </p>
+      <div class="person-name">
+        <span class="name-dev">अविन खड्का</span>
+        <span class="name-roman">Aveen Khadka</span>
       </div>
+    </div>
 
-      <!-- Title -->
-      <h1 class="shubha-vivah">शुभ विवाह</h1>
-
-      <!-- Shloka -->
-      <p class="mantra-text">
-        "निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥"
+    <!-- Event box -->
+    <div class="event-box">
+      <p class="event-label">विवाह समारोह</p>
+      <p class="event-date">
+        २०८३ साल बैशाख ८ गते<br>
+        मंगलबार
+      </p>
+      <p class="event-note">
+        तपाईंको गरिमामय उपस्थितिको लागि<br>
+        हार्दिक निमन्त्रणा गर्दछौं।
       </p>
     </div>
 
-    <!-- Gold ribbon -->
-    <div class="ribbon"></div>
+  </div><!-- end card-body-inner -->
+  </div><!-- end card-body -->
 
-    <!-- Card body -->
-    <div class="card-body">
-
-      <!-- Bride -->
-      <div class="family-block">
-        <p class="parent-line">
-          <strong>श्री गणेश खनाल</strong> तथा<br>
-          श्रीमती <strong>भगवती खनाल</strong>की सुपुत्री
-        </p>
-        <div class="bride-groom-name">
-          <span class="name-dev">उप सेनानी रश्मि खनाल</span>
-          <span class="name-roman">Rashmi Khanal</span>
-        </div>
-      </div>
-
-      <!-- Weds divider -->
-      <div class="weds-divider">
-        <div class="weds-line"></div>
-        <div class="weds-text">वैवाहिक बन्धनमा</div>
-        <div class="weds-line"></div>
-      </div>
-
-      <!-- Groom -->
-      <div class="family-block">
-        <p class="parent-line">
-          <strong>श्री रवि खड्का</strong> तथा<br>
-          श्रीमती <strong>आशा खड्का</strong>का सुपुत्र
-        </p>
-        <div class="bride-groom-name">
-          <span class="name-dev">अविन खड्का</span>
-          <span class="name-roman">Aveen Khadka</span>
-        </div>
-      </div>
-
-      <div class="gold-sep"></div>
-
-    </div><!-- end card-body top -->
-
-    <!-- Mandap Photo - full width, edge to edge -->
-    <div class="mandap-wrap">
-      <img src="images/mandap.png" alt="मण्डप" class="mandap-img">
-      <div class="mandap-overlay">
-        <span class="mandap-label">मण्डप</span>
-      </div>
-    </div>
-
-    <!-- Card body bottom -->
-    <div class="card-body" style="padding-top: 20px;">
-
-      <!-- Event Info -->
-      <div class="event-box">
-        <p class="event-label">विवाह समारोह</p>
-        <p class="event-date">२०८३ साल बैशाख ८ गते, मंगलबार</p>
-        <p class="event-note">
-          तपाईंको गरिमामय उपस्थितिको लागि<br>हार्दिक निमन्त्रणा गर्दछौं।
-        </p>
-      </div>
-
-    </div>
-
-    <!-- Footer decor -->
-    <div class="footer-panel">
-      <img src="images/diya.avif" alt="दीया">
-      <div class="footer-om">ॐ</div>
-      <img src="images/lotus.jpg" alt="कमल">
-    </div>
-
+  <!-- Footer -->
+  <div class="footer-panel">
+    <span class="footer-symbol small">✿</span>
+    <div class="footer-sep"></div>
+    <span class="footer-symbol large">ॐ</span>
+    <div class="footer-sep"></div>
+    <span class="footer-symbol small">✿</span>
   </div>
-</main>
 
-<script>
-  // Intro → Main transition
-  const intro = document.getElementById('intro-screen');
-  const main  = document.getElementById('main-content');
+</div><!-- end card -->
 
-  setTimeout(() => {
-    intro.classList.add('fade-out');
-    setTimeout(() => {
-      intro.style.display = 'none';
-      main.classList.add('visible');
-      spawnPetals();
-    }, 1200);
-  }, 2800);
-
-  // Play audio after 1.5 seconds
-  setTimeout(() => {
-    const music = document.getElementById('bg-music');
-    music.volume = 0.35;
-    music.play().catch((err) => console.log('Autoplay blocked:', err));
-  }, 1500);
-
-  // Unmute on first user interaction
-  function unmute() {
-    const music = document.getElementById('bg-music');
-    music.muted = false;
-    document.removeEventListener('click', unmute);
-    document.removeEventListener('touchstart', unmute);
-  }
-  
-  document.addEventListener('click', unmute, { once: true });
-  document.addEventListener('touchstart', unmute, { once: true });
-  
-
-  // Floating flower petals
-  function spawnPetals() {
-    const container = document.getElementById('petals-container');
-    const symbols = ['❀','✿','❁','✾'];
-    const colors  = ['#C9A84C','#E8C97A','#ff8fa3','#ffb3c1'];
-
-    for (let i = 0; i < 14; i++) {
-      const p = document.createElement('div');
-      p.className = 'petal';
-      p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-      const left = Math.random() * 100;
-      const dur  = 6 + Math.random() * 8;
-      const del  = Math.random() * 12;
-      const col  = colors[Math.floor(Math.random() * colors.length)];
-      p.style.cssText = `left:${left}vw; animation-duration:${dur}s; animation-delay:${del}s; color:${col};`;
-      container.appendChild(p);
-    }
-  }
-</script>
 <audio id="bg-music" loop preload="auto" muted>
   <source src="audio/wedding.mp3" type="audio/mpeg">
 </audio>
+<script>
+  // Unmute on first interaction
+  function unmute() {
+    const m = document.getElementById('bg-music');
+    m.muted = false;
+    m.volume = 0.35;
+    m.play().catch(() => {});
+    document.removeEventListener('click', unmute);
+    document.removeEventListener('touchstart', unmute);
+  }
+  document.addEventListener('click', unmute, { once: true });
+  document.addEventListener('touchstart', unmute, { once: true });
+</script>
 </body>
 </html>
